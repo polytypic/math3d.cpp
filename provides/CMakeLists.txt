@@ -1,0 +1,1 @@
+add_conventional_library(math3d_v1)

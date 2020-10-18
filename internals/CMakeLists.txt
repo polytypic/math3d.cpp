@@ -1,0 +1,1 @@
+add_conventional_executable_tests(PRIVATE math3d_v1)

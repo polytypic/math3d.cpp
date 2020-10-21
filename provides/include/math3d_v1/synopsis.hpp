@@ -62,6 +62,8 @@ auto cross(const vec<SL, 3> &lhs, const vec<SR, 3> &rhs);
 
 template <class S, size_t N> auto normalize(const vec<S, N> &v);
 
+template <class S, size_t N> auto homogenize(const vec<S, N> &v);
+
 // mtx.hpp =====================================================================
 
 template <class Scalar, size_t R, size_t C = R> struct mtx {
@@ -92,6 +94,14 @@ template <class S, size_t R, size_t C> auto transpose(const mtx<S, R, C> &m);
 template <class S, size_t N> auto set_identity(mtx<S, N> *out);
 
 template <class S, size_t N> auto make_identity();
+
+template <class S, size_t N, size_t M>
+auto gauss_jordan(mtx<S, N> *a, mtx<S, N, M> *y);
+
+template <class S, size_t N> auto inverse(const mtx<S, N> &m);
+
+template <class SL, size_t N, size_t M, class SR>
+auto operator*(const mtx<SL, N, M> &m, const vec<SR, M> &v);
 
 // transform.hpp ===============================================================
 

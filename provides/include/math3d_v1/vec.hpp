@@ -104,3 +104,7 @@ auto math3d_v1::cross(const vec<SL, 3> &lhs, const vec<SR, 3> &rhs) {
 template <class S, size_t N> auto math3d_v1::normalize(const vec<S, N> &v) {
   return v * (1 / mag(v));
 }
+
+template <class S, size_t N> auto math3d_v1::homogenize(const vec<S, N> &v) {
+  return v * (1 / v[N - 1]);
+}

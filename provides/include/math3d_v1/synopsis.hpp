@@ -57,6 +57,11 @@ template <class S, size_t N> vec<S, N> zero_vec();
 template <class SL, class SR, class ST, size_t N>
 auto lerp(const vec<SL, N> &lhs, const vec<SR, N> &rhs, ST t);
 
+template <class SL, class SR>
+auto cross(const vec<SL, 3> &lhs, const vec<SR, 3> &rhs);
+
+template <class S, size_t N> auto normalize(const vec<S, N> &v);
+
 // mtx.hpp =====================================================================
 
 template <class Scalar, size_t R, size_t C = R> struct mtx {

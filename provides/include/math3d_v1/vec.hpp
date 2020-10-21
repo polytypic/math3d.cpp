@@ -91,3 +91,16 @@ auto math3d_v1::lerp(const vec<SL, N> &lhs, const vec<SR, N> &rhs, ST t) {
     result[i] = t * (rhs[i] - lhs[i]) + lhs[i];
   return result;
 }
+
+template <class SL, class SR>
+auto math3d_v1::cross(const vec<SL, 3> &lhs, const vec<SR, 3> &rhs) {
+  return vec<decltype(SL() * SR()), 3>{
+      lhs[1] * rhs[2] - lhs[2] * rhs[1],
+      lhs[2] * rhs[0] - lhs[0] * rhs[2],
+      lhs[0] * rhs[1] - lhs[1] * rhs[0],
+  };
+}
+
+template <class S, size_t N> auto math3d_v1::normalize(const vec<S, N> &v) {
+  return v * (1 / mag(v));
+}

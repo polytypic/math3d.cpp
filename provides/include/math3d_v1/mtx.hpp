@@ -19,7 +19,7 @@ Scalar (&math3d_v1::mtx<Scalar, R, C>::operator[](size_t i))[C] {
 }
 
 template <class BinOp, class SL, class SR, size_t R, size_t C>
-auto math3d_v1::binOp(const mtx<SL, R, C> &lhs, const mtx<SR, R, C> &rhs) {
+auto math3d_v1::bin_op(const mtx<SL, R, C> &lhs, const mtx<SR, R, C> &rhs) {
   mtx<decltype(BinOp::apply(SL(), SR())), R, C> result;
   for (size_t i = 0; i < R; ++i)
     for (size_t j = 0; j < C; ++j)
@@ -30,7 +30,7 @@ auto math3d_v1::binOp(const mtx<SL, R, C> &lhs, const mtx<SR, R, C> &rhs) {
 #define BIN_OP(name, op)                                                       \
   template <class SL, class SR, size_t R, size_t C>                            \
   auto math3d_v1::op(const mtx<SL, R, C> &lhs, const mtx<SR, R, C> &rhs) {     \
-    return binOp<name>(lhs, rhs);                                              \
+    return bin_op<name>(lhs, rhs);                                             \
   }
 
 BIN_OP(add_op, operator+)

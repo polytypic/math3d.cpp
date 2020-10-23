@@ -20,13 +20,13 @@ template <class Scalar, size_t N> struct vec {
 };
 
 template <class BinOp, class SL, class SR, size_t N>
-auto binOp(const vec<SL, N> &lhs, const vec<SR, N> &rhs);
+auto bin_op(const vec<SL, N> &lhs, const vec<SR, N> &rhs);
 
 template <class BinOp, class SL, class SR, size_t N>
-auto binOp(SL lhs, const vec<SR, N> &rhs);
+auto bin_op(SL lhs, const vec<SR, N> &rhs);
 
 template <class BinOp, class SL, class SR, size_t N>
-auto binOp(const vec<SL, N> &lhs, SR rhs);
+auto bin_op(const vec<SL, N> &lhs, SR rhs);
 
 #define MAKE(name, op)                                                         \
   template <class SL, class SR, size_t N>                                      \
@@ -76,7 +76,7 @@ template <class Scalar, size_t R, size_t C = R> struct mtx {
 };
 
 template <class BinOp, class SL, class SR, size_t R, size_t C>
-auto binOp(const mtx<SL, R, C> &lhs, const mtx<SR, R, C> &rhs);
+auto bin_op(const mtx<SL, R, C> &lhs, const mtx<SR, R, C> &rhs);
 
 #define BIN_OP(name, op)                                                       \
   template <class SL, class SR, size_t R, size_t C>                            \

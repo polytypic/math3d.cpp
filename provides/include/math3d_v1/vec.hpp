@@ -18,7 +18,7 @@ template <class S, size_t N> S &math3d_v1::vec<S, N>::operator[](size_t i) {
 }
 
 template <class BinOp, class SL, class SR, size_t N>
-auto math3d_v1::binOp(const vec<SL, N> &lhs, const vec<SR, N> &rhs) {
+auto math3d_v1::bin_op(const vec<SL, N> &lhs, const vec<SR, N> &rhs) {
   vec<decltype(BinOp::apply(SL(), SR())), N> result;
   for (size_t i = 0; i < N; ++i)
     result[i] = BinOp::apply(lhs[i], rhs[i]);
@@ -26,7 +26,7 @@ auto math3d_v1::binOp(const vec<SL, N> &lhs, const vec<SR, N> &rhs) {
 }
 
 template <class BinOp, class SL, class SR, size_t N>
-auto math3d_v1::binOp(SL lhs, const vec<SR, N> &rhs) {
+auto math3d_v1::bin_op(SL lhs, const vec<SR, N> &rhs) {
   vec<decltype(BinOp::apply(SL(), SR())), N> result;
   for (size_t i = 0; i < N; ++i)
     result[i] = BinOp::apply(lhs, rhs[i]);
@@ -34,7 +34,7 @@ auto math3d_v1::binOp(SL lhs, const vec<SR, N> &rhs) {
 }
 
 template <class BinOp, class SL, class SR, size_t N>
-auto math3d_v1::binOp(const vec<SL, N> &lhs, SR rhs) {
+auto math3d_v1::bin_op(const vec<SL, N> &lhs, SR rhs) {
   vec<decltype(BinOp::apply(SL(), SR())), N> result;
   for (size_t i = 0; i < N; ++i)
     result[i] = BinOp::apply(lhs[i], rhs);
@@ -44,17 +44,17 @@ auto math3d_v1::binOp(const vec<SL, N> &lhs, SR rhs) {
 #define MAKE(name, op)                                                         \
   template <class SL, class SR, size_t N>                                      \
   auto math3d_v1::op(const vec<SL, N> &lhs, const vec<SR, N> &rhs) {           \
-    return binOp<name>(lhs, rhs);                                              \
+    return bin_op<name>(lhs, rhs);                                             \
   }                                                                            \
                                                                                \
   template <class SL, class SR, size_t N>                                      \
   auto math3d_v1::op(SL lhs, const vec<SR, N> &rhs) {                          \
-    return binOp<name>(lhs, rhs);                                              \
+    return bin_op<name>(lhs, rhs);                                             \
   }                                                                            \
                                                                                \
   template <class SL, class SR, size_t N>                                      \
   auto math3d_v1::op(const vec<SL, N> &lhs, SR rhs) {                          \
-    return binOp<name>(lhs, rhs);                                              \
+    return bin_op<name>(lhs, rhs);                                             \
   }
 
 MAKE(add_op, operator+)

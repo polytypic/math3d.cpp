@@ -108,3 +108,12 @@ template <class S, size_t N> auto math3d_v1::normalize(const vec<S, N> &v) {
 template <class S, size_t N> auto math3d_v1::homogenize(const vec<S, N> &v) {
   return v * (1 / v[N - 1]);
 }
+
+template <size_t N, size_t I, class S, size_t M>
+auto math3d_v1::sub(const vec<S, M> &v) {
+  static_assert(I + N <= M);
+  vec<S, N> result;
+  for (size_t i = 0; i < N; ++i)
+    result[i] = v[i + I];
+  return result;
+}

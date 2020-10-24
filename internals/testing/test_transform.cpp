@@ -10,3 +10,9 @@ auto test_mtx_vec = test([]() {
            make_vec(0.5f, 0.25f, 1.0f, 0.0f);
   verify(v[0] == 1 && v[1] == 1 && v[2] == 1);
 });
+
+auto test_translation = test([]() {
+  auto v = make_translation(make_vec(2.0f, 4.0f, 1.0f)) *
+           make_vec(-1.0f, -3.0f, 0.0f, 1.0f);
+  verify(v[0] == 1 && v[1] == 1 && v[2] == 1);
+});

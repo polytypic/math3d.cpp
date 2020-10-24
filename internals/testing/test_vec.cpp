@@ -8,7 +8,7 @@ using namespace testing_v1;
 using namespace math3d_v1;
 using namespace data_v1;
 
-auto test_mag = test([]() { verify(mag(make_vec(1, 0, 0)) == 1); });
+auto test_mag = test([]() { verify(mag(make_vec(make_vec(1, 0), 0)) == 1); });
 
 auto test_lerp =
     test([]() { verify(lerp(make_vec(1), make_vec(0), 0.5f)[0] == 0.5f); });
@@ -44,5 +44,5 @@ auto test_cross =
 auto test_homogenize =
     test([]() { verify(homogenize(make_vec(6.0f, 3.0f))[0] == 2.0f); });
 
-auto test_sub =
-    test([]() { verify(size(sub<2>(make_vec(1, 2, 3)).values) == 2); });
+auto test_sub = test(
+    []() { verify(size(sub<2>(make_vec(make_vec(1), 2, 3)).values) == 2); });

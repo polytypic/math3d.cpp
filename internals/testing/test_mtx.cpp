@@ -56,3 +56,8 @@ auto test_from_diagonal = test([]() {
   verify(is_identity(from_diagonal(make_vec(2.0f, 2.0f)) *
                      from_diagonal(make_vec(0.5f, 0.5f))));
 });
+
+auto test_mtx_vec = test([]() {
+  auto v = from_diagonal(make_vec(2.0f, 4.0f)) * make_vec(0.5f, 0.25f);
+  verify(v[0] == 1 && v[1] == 1);
+});

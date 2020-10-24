@@ -7,13 +7,13 @@
 #include <cmath>
 
 template <class Scalar, size_t R, size_t C>
-const Scalar (&math3d_v1::mtx<Scalar, R, C>::operator[](size_t i) const)[C] {
+const auto &math3d_v1::mtx<Scalar, R, C>::operator[](size_t i) const {
   assert(i < R);
   return values[i];
 }
 
 template <class Scalar, size_t R, size_t C>
-Scalar (&math3d_v1::mtx<Scalar, R, C>::operator[](size_t i))[C] {
+auto &math3d_v1::mtx<Scalar, R, C>::operator[](size_t i) {
   assert(i < R);
   return values[i];
 }

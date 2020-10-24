@@ -7,12 +7,12 @@
 #include <cassert>
 
 template <class S, size_t N>
-const S &math3d_v1::vec<S, N>::operator[](size_t i) const {
+const auto &math3d_v1::vec<S, N>::operator[](size_t i) const {
   assert(i < N);
   return values[i];
 }
 
-template <class S, size_t N> S &math3d_v1::vec<S, N>::operator[](size_t i) {
+template <class S, size_t N> auto &math3d_v1::vec<S, N>::operator[](size_t i) {
   assert(i < N);
   return values[i];
 }
@@ -80,9 +80,7 @@ template <class S, size_t N> auto math3d_v1::mag(const vec<S, N> &v) {
   return sqrt(norm(v));
 }
 
-template <class S, size_t N> math3d_v1::vec<S, N> math3d_v1::zero_vec() {
-  return {};
-}
+template <class S, size_t N> auto math3d_v1::zero_vec() { return vec<S, N>{}; }
 
 template <class SL, class SR, class ST, size_t N>
 auto math3d_v1::lerp(const vec<SL, N> &lhs, const vec<SR, N> &rhs, ST t) {

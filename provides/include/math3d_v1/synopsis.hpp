@@ -15,8 +15,8 @@ template <class Scalar, size_t N> struct vec {
 
   Scalar values[N];
 
-  const Scalar &operator[](size_t i) const;
-  Scalar &operator[](size_t i);
+  const auto &operator[](size_t i) const;
+  auto &operator[](size_t i);
 };
 
 template <class BinOp, class SL, class SR, size_t N>
@@ -52,7 +52,7 @@ template <class S, size_t N> auto norm(const vec<S, N> &v);
 
 template <class S, size_t N> auto mag(const vec<S, N> &v);
 
-template <class S, size_t N> vec<S, N> zero_vec();
+template <class S, size_t N> auto zero_vec();
 
 template <class SL, class SR, class ST, size_t N>
 auto lerp(const vec<SL, N> &lhs, const vec<SR, N> &rhs, ST t);
@@ -79,8 +79,8 @@ template <class Scalar, size_t R, size_t C = R> struct mtx {
 
   Scalar values[R][C];
 
-  const Scalar (&operator[](size_t i) const)[C];
-  Scalar (&operator[](size_t i))[C];
+  const auto &operator[](size_t i) const;
+  auto &operator[](size_t i);
 };
 
 template <class BinOp, class SL, class SR, size_t R, size_t C>

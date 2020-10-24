@@ -67,7 +67,7 @@ MAKE(rem_op, operator%)
 
 template <class SL, class SR, size_t N>
 auto math3d_v1::dot(const vec<SL, N> &lhs, const vec<SR, N> &rhs) {
-  decltype(SL() * SR()) result = lhs[0] * rhs[0];
+  auto result = lhs[0] * rhs[0];
   for (size_t i = 1; i < N; ++i)
     result += lhs[i] * rhs[i];
   return result;

@@ -78,7 +78,7 @@ template <class S, size_t N> auto math3d_v1::norm(const vec<S, N> &v) {
 }
 
 template <class S, size_t N> auto math3d_v1::mag(const vec<S, N> &v) {
-  return sqrt(norm(v));
+  return std::sqrt(norm(v));
 }
 
 template <class S, size_t N> auto math3d_v1::zero_vec() { return vec<S, N>{}; }

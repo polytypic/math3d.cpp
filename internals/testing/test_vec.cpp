@@ -1,12 +1,9 @@
 #include "math3d_v1/vec.hpp"
 
-#include "data_v1/array.hpp"
-
 #include "testing_v1/test.hpp"
 
 using namespace testing_v1;
 using namespace math3d_v1;
-using namespace data_v1;
 
 auto test_mag = test([]() { verify(mag(make_vec(make_vec(1, 0), 0)) == 1); });
 

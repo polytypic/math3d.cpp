@@ -1,6 +1,6 @@
 #pragma once
 
-#include "math3d_v1/synopsis.hpp"
+#include "math3d_v1/mtx.hpp"
 
 #include <cassert>
 
@@ -26,7 +26,7 @@ auto math3d_v1::make_translation(const vec<Scalar, 3> &trans) {
 
 template <class Scalar>
 auto math3d_v1::make_scaling(const vec<Scalar, 3> &scaling) {
-  return from_diagonal(make_vec(scaling, 1));
+  return from_diagonal(make_vec(scaling, Scalar(1)));
 }
 
 template <class Scalar>

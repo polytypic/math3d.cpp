@@ -1,6 +1,4 @@
 #include "math3d_v1/mtx.hpp"
-#include "math3d_v1/transform.hpp"
-#include "math3d_v1/vec.hpp"
 
 #include "testing_v1/test.hpp"
 

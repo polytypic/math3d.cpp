@@ -1,10 +1,6 @@
 #pragma once
 
-#include "math3d_v1/ops.hpp"
-#include "math3d_v1/synopsis.hpp"
-
-#include <cassert>
-#include <cmath>
+#include "math3d_v1/vec.hpp"
 
 template <class Scalar, size_t R, size_t C>
 auto math3d_v1::mtx<Scalar, R, C>::rows() const {

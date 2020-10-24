@@ -45,4 +45,4 @@ auto test_homogenize =
     test([]() { verify(homogenize(make_vec(6.0f, 3.0f))[0] == 2.0f); });
 
 auto test_sub = test(
-    []() { verify(size(sub<2>(make_vec(make_vec(1), 2, 3)).values) == 2); });
+    []() { verify((sub<2>(make_vec(make_vec(1), 2, 3))).dimensions() == 2); });

@@ -1,5 +1,6 @@
 #include "math3d_v1/mtx.hpp"
 #include "math3d_v1/transform.hpp"
+#include "math3d_v1/vec.hpp"
 
 #include "testing_v1/test.hpp"
 
@@ -29,4 +30,21 @@ auto test_inverse = test([]() {
   auto a = mtx<float, 3>{{{1, 4, 1}, {5, 9, 2}, {6, 5, 3}}};
 
   verify(is_identity(a * inverse(a)));
+});
+
+auto test_ops = test([]() {
+  const mtx<float, 1> m3{{{3.0f}}};
+  const mtx<float, 1> m6{{{6.0f}}};
+  verify((m3 + m6)[0][0] == 9.0f);
+  verify((m3 - m6)[0][0] == -3.0f);
+});
+
+auto test_transpose = test([]() {
+  const auto m = from_columns(make_vec(1, 2, 3), make_vec(4, 5, 6));
+  const auto t = transpose(m);
+  verify(m.columns() == t.rows());
+  verify(m.rows() == t.columns());
+  for (size_t i = 0; i < m.rows(); ++i)
+    for (size_t j = 0; j < m.columns(); ++j)
+      verify(m[i][j] == t[j][i]);
 });

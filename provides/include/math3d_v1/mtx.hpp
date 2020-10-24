@@ -7,6 +7,16 @@
 #include <cmath>
 
 template <class Scalar, size_t R, size_t C>
+auto math3d_v1::mtx<Scalar, R, C>::rows() const {
+  return R;
+}
+
+template <class Scalar, size_t R, size_t C>
+auto math3d_v1::mtx<Scalar, R, C>::columns() const {
+  return C;
+}
+
+template <class Scalar, size_t R, size_t C>
 const auto &math3d_v1::mtx<Scalar, R, C>::operator[](size_t i) const {
   assert(i < R);
   return values[i];

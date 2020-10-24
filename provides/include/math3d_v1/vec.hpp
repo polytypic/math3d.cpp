@@ -7,6 +7,10 @@
 #include <cassert>
 #include <cmath>
 
+template <class S, size_t N> auto math3d_v1::vec<S, N>::dimensions() const {
+  return N;
+}
+
 template <class S, size_t N>
 const auto &math3d_v1::vec<S, N>::operator[](size_t i) const {
   assert(i < N);

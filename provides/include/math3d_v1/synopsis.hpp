@@ -15,6 +15,8 @@ template <class Scalar, size_t N> struct vec {
 
   Scalar values[N];
 
+  auto dimensions() const;
+
   const auto &operator[](size_t i) const;
   auto &operator[](size_t i);
 };
@@ -79,6 +81,9 @@ template <class Scalar, size_t R, size_t C = R> struct mtx {
   using scalar_type = Scalar;
 
   Scalar values[R][C];
+
+  auto rows() const;
+  auto columns() const;
 
   const auto &operator[](size_t i) const;
   auto &operator[](size_t i);

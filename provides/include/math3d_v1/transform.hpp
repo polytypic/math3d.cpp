@@ -25,11 +25,8 @@ auto math3d_v1::make_translation(const vec<Scalar, 3> &trans) {
 }
 
 template <class Scalar>
-auto math3d_v1::make_scaling(const vec<Scalar, 3> &scale) {
-  return mtx<Scalar, 4>{{{scale[0], 0, 0, 0},
-                         {0, scale[1], 0, 0},
-                         {0, 0, scale[2], 0},
-                         {0, 0, 0, 1}}};
+auto math3d_v1::make_scaling(const vec<Scalar, 3> &scaling) {
+  return from_diagonal(make_vec(scaling, 1));
 }
 
 template <class Scalar>

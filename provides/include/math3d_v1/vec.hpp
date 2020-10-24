@@ -117,3 +117,18 @@ auto math3d_v1::sub(const vec<S, M> &v) {
     result[i] = v[i + I];
   return result;
 }
+
+template <class... Scalars> auto math3d_v1::make_vec(Scalars... values) {
+  return vec<decltype((values + ...)), sizeof...(Scalars)>{values...};
+}
+
+template <class Scalar, size_t N, class... Scalars>
+auto math3d_v1::make_vec(const vec<Scalar, N> &v, Scalars... values) {
+  vec<decltype(Scalar() + (values + ...)), N + sizeof...(Scalars)> result;
+  size_t i = 0;
+  do {
+    result[i] = v[i];
+  } while (++i < N);
+  ((result[i++] = values), ...);
+  return result;
+}

@@ -134,3 +134,22 @@ auto math3d_v1::operator*(const mtx<SL, N, M> &m, const vec<SR, M> &v) {
   }
   return result;
 }
+
+template <size_t Rows, class... Scalars>
+auto math3d_v1::from_columns(const vec<Scalars, Rows> &... columns) {
+  using Scalar = decltype((Scalars() + ...));
+  mtx<Scalar, Rows, sizeof...(Scalars)> result;
+  for (size_t i = 0; i < Rows; ++i) {
+    size_t j = 0;
+    ((result[i][j++] = columns[i]), ...);
+  }
+  return result;
+}
+
+template <class Scalar, size_t Rows>
+auto math3d_v1::from_diagonal(const vec<Scalar, Rows> &diagonal) {
+  mtx<Scalar, Rows> result{};
+  for (size_t i = 0; i < Rows; ++i)
+    result[i][i] = diagonal[i];
+  return result;
+}

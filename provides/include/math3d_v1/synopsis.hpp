@@ -67,6 +67,11 @@ template <class S, size_t N> auto homogenize(const vec<S, N> &v);
 template <size_t N, size_t I = 0, class S, size_t M>
 auto sub(const vec<S, M> &v);
 
+template <class... Scalars> auto make_vec(Scalars... values);
+
+template <class Scalar, size_t N, class... Scalars>
+auto make_vec(const vec<Scalar, N> &v, Scalars... values);
+
 // mtx.hpp =====================================================================
 
 template <class Scalar, size_t R, size_t C = R> struct mtx {
@@ -105,6 +110,12 @@ template <class S, size_t N> auto inverse(const mtx<S, N> &m);
 
 template <class SL, size_t N, size_t M, class SR>
 auto operator*(const mtx<SL, N, M> &m, const vec<SR, M> &v);
+
+template <size_t Rows, class... Scalars>
+auto from_columns(const vec<Scalars, Rows> &... columns);
+
+template <class Scalar, size_t Rows>
+auto from_diagonal(const vec<Scalar, Rows> &diagonal);
 
 // transform.hpp ===============================================================
 

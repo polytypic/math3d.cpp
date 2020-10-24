@@ -5,9 +5,8 @@
 #include <cassert>
 
 template <class Scalar>
-auto math3d_v1::make_projection(Scalar fov, Scalar near, Scalar far) {
-  static const Scalar fov_scale = 0.5 * pi / 180;
-  Scalar scale = 1 / tan(fov * fov_scale);
+auto math3d_v1::make_projection(Scalar fov_radians, Scalar near, Scalar far) {
+  Scalar scale = 1 / tan(0.5f * fov_radians);
   Scalar near_far_sub_inv = 1 / (near - far);
   return mtx<Scalar, 4>{
       {{scale, 0, 0, 0},

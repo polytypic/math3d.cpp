@@ -5,6 +5,7 @@
 #include "math3d_v1/ops.hpp"
 
 #include <cassert>
+#include <cmath>
 
 template <class S, size_t N>
 const auto &math3d_v1::vec<S, N>::operator[](size_t i) const {
@@ -116,13 +117,15 @@ auto math3d_v1::sub(const vec<S, M> &v) {
   return result;
 }
 
-template <class... Scalars> auto math3d_v1::make_vec(Scalars... values) {
-  return vec<decltype((values + ...)), sizeof...(Scalars)>{values...};
+template <class Scalar, class... Scalars>
+auto math3d_v1::make_vec(Scalar value, Scalars... values) {
+  return vec<decltype(+(value + ... + values)), 1 + sizeof...(Scalars)>{
+      value, values...};
 }
 
 template <class Scalar, size_t N, class... Scalars>
 auto math3d_v1::make_vec(const vec<Scalar, N> &v, Scalars... values) {
-  vec<decltype(Scalar() + (values + ...)), N + sizeof...(Scalars)> result;
+  vec<decltype(+(Scalar() + ... + values)), N + sizeof...(Scalars)> result;
   size_t i = 0;
   do {
     result[i] = v[i];

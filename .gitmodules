@@ -10,3 +10,7 @@
 	path = equipment/polyfill.cpp/v1
 	url = https://github.com/per-framework/polyfill.cpp.git
 	branch = v1
+[submodule "equipment/data.cpp/v1"]
+	path = equipment/data.cpp/v1
+	url = https://github.com/per-framework/data.cpp.git
+	branch = v1

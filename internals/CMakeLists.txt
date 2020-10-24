@@ -1,1 +1,1 @@
-add_conventional_executable_tests(PRIVATE math3d_v1 testing_v1)
+add_conventional_executable_tests(PRIVATE math3d_v1 data_v1 testing_v1)

@@ -67,7 +67,8 @@ template <class S, size_t N> auto homogenize(const vec<S, N> &v);
 template <size_t N, size_t I = 0, class S, size_t M>
 auto sub(const vec<S, M> &v);
 
-template <class... Scalars> auto make_vec(Scalars... values);
+template <class Scalar, class... Scalars>
+auto make_vec(Scalar value, Scalars... values);
 
 template <class Scalar, size_t N, class... Scalars>
 auto make_vec(const vec<Scalar, N> &v, Scalars... values);

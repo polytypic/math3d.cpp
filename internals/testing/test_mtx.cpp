@@ -9,8 +9,8 @@ using namespace math3d_v1;
 
 template <class S, size_t N>
 static bool is_identity(const mtx<S, N> &m, S epsilon = 0.01f) {
-  for (size_t i = 0; i < 3; ++i)
-    for (size_t j = 0; j < 3; ++j)
+  for (size_t i = 0; i < N; ++i)
+    for (size_t j = 0; j < N; ++j)
       if (epsilon < std::abs(m[i][j] - (i == j)))
         return false;
   return true;
@@ -47,4 +47,12 @@ auto test_transpose = test([]() {
   for (size_t i = 0; i < m.rows(); ++i)
     for (size_t j = 0; j < m.columns(); ++j)
       verify(m[i][j] == t[j][i]);
+});
+
+auto test_make_identity =
+    test([]() { verify(is_identity(make_identity<float, 4>())); });
+
+auto test_from_diagonal = test([]() {
+  verify(is_identity(from_diagonal(make_vec(2.0f, 2.0f)) *
+                     from_diagonal(make_vec(0.5f, 0.5f))));
 });

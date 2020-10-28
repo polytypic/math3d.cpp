@@ -10,25 +10,25 @@ namespace math3d_v1 {
     }                                                                          \
   };
 
-MAKE(add_op, +)
-MAKE(sub_op, -)
-MAKE(mul_op, *)
-MAKE(div_op, /)
-MAKE(rem_op, %)
+MAKE(add_op_t, +)
+MAKE(sub_op_t, -)
+MAKE(mul_op_t, *)
+MAKE(div_op_t, /)
+MAKE(rem_op_t, %)
 
-MAKE(bxor_op, ^)
-MAKE(band_op, &)
-MAKE(bor_op, |)
+MAKE(bxor_op_t, ^)
+MAKE(band_op_t, &)
+MAKE(bor_op_t, |)
 
-MAKE(shl_op, <<)
-MAKE(shr_op, >>)
+MAKE(shl_op_t, <<)
+MAKE(shr_op_t, >>)
 
-MAKE(lt_op, <)
-MAKE(lte_op, <=)
-MAKE(eq_op, ==)
-MAKE(neq_op, !=)
-MAKE(gt_op, >)
-MAKE(gte_op, >=)
+MAKE(lt_op_t, <)
+MAKE(lte_op_t, <=)
+MAKE(eq_op_t, ==)
+MAKE(neq_op_t, !=)
+MAKE(gt_op_t, >)
+MAKE(gte_op_t, >=)
 #undef MAKE
 
 #define MAKE(name, op)                                                         \
@@ -38,9 +38,9 @@ MAKE(gte_op, >=)
     }                                                                          \
   };
 
-MAKE(neg_op, -)
-MAKE(bnot_op, ~)
-MAKE(lnot_op, !)
+MAKE(neg_op_t, -)
+MAKE(bnot_op_t, ~)
+MAKE(lnot_op_t, !)
 #undef MAKE
 
 } // namespace math3d_v1

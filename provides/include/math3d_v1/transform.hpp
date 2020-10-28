@@ -5,10 +5,10 @@
 #include <cassert>
 
 template <class Scalar>
-auto math3d_v1::make_projection(Scalar fov_radians, Scalar near, Scalar far) {
+auto math3d_v1::perspective(Scalar fov_radians, Scalar near, Scalar far) {
   Scalar scale = 1 / tan(0.5f * fov_radians);
   Scalar near_far_sub_inv = 1 / (near - far);
-  return mtx<Scalar, 4>{
+  return mtx_t<Scalar, 4>{
       {{scale, 0, 0, 0},
        {0, scale, 0, 0},
        {0, 0, far * near_far_sub_inv, far * near_far_sub_inv * near},
@@ -16,23 +16,22 @@ auto math3d_v1::make_projection(Scalar fov_radians, Scalar near, Scalar far) {
 }
 
 template <class Scalar>
-auto math3d_v1::make_translation(const vec<Scalar, 3> &trans) {
-  return mtx<Scalar, 4>{{{1, 0, 0, trans[0]},
-                         {0, 1, 0, trans[1]},
-                         {0, 0, 1, trans[2]},
-                         {0, 0, 0, 1}}};
+auto math3d_v1::translation(const vec_t<Scalar, 3> &trans) {
+  return mtx_t<Scalar, 4>{{{1, 0, 0, trans[0]},
+                           {0, 1, 0, trans[1]},
+                           {0, 0, 1, trans[2]},
+                           {0, 0, 0, 1}}};
 }
 
 template <class Scalar>
-auto math3d_v1::make_scaling(const vec<Scalar, 3> &scaling) {
-  return from_diagonal(make_vec(scaling, Scalar(1)));
+auto math3d_v1::scaling(const vec_t<Scalar, 3> &scaling) {
+  return from_diagonal(vec(scaling, Scalar(1)));
 }
 
-template <class Scalar>
-auto math3d_v1::make_rotation(Scalar radians, size_t axis) {
+template <class Scalar> auto math3d_v1::rotation(Scalar radians, size_t axis) {
   assert(axis < 3);
 
-  mtx<Scalar, 4> result{};
+  mtx_t<Scalar, 4> result{};
 
   result[axis][axis] = 1;
   result[3][3] = 1;

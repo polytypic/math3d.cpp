@@ -12,7 +12,7 @@ template <class Scalar> inline auto from_angle(Scalar angle);
 
 // vec.hpp =====================================================================
 
-template <class Scalar, size_t N> struct vec {
+template <class Scalar, size_t N> struct vec_t {
   using scalar_type = Scalar;
 
   Scalar values[N];
@@ -24,62 +24,62 @@ template <class Scalar, size_t N> struct vec {
 };
 
 template <class BinOp, class SL, class SR, size_t N>
-auto bin_op(const vec<SL, N> &lhs, const vec<SR, N> &rhs);
+auto bin_op(const vec_t<SL, N> &lhs, const vec_t<SR, N> &rhs);
 
 template <class BinOp, class SL, class SR, size_t N>
-auto bin_op(SL lhs, const vec<SR, N> &rhs);
+auto bin_op(SL lhs, const vec_t<SR, N> &rhs);
 
 template <class BinOp, class SL, class SR, size_t N>
-auto bin_op(const vec<SL, N> &lhs, SR rhs);
+auto bin_op(const vec_t<SL, N> &lhs, SR rhs);
 
-#define MAKE(name, op)                                                         \
+#define MAKE(op)                                                               \
   template <class SL, class SR, size_t N>                                      \
-  auto op(const vec<SL, N> &lhs, const vec<SR, N> &rhs);                       \
+  auto op(const vec_t<SL, N> &lhs, const vec_t<SR, N> &rhs);                   \
                                                                                \
   template <class SL, class SR, size_t N>                                      \
-  auto op(SL lhs, const vec<SR, N> &rhs);                                      \
+  auto op(SL lhs, const vec_t<SR, N> &rhs);                                    \
                                                                                \
   template <class SL, class SR, size_t N>                                      \
-  auto op(const vec<SL, N> &lhs, SR rhs);
+  auto op(const vec_t<SL, N> &lhs, SR rhs);
 
-MAKE(add_op, operator+)
-MAKE(sub_op, operator-)
-MAKE(mul_op, operator*)
-MAKE(div_op, operator/)
-MAKE(rem_op, operator%)
+MAKE(operator+)
+MAKE(operator-)
+MAKE(operator*)
+MAKE(operator/)
+MAKE(operator%)
 #undef MAKE
 
 template <class SL, class SR, size_t N>
-auto dot(const vec<SL, N> &lhs, const vec<SR, N> &rhs);
+auto dot(const vec_t<SL, N> &lhs, const vec_t<SR, N> &rhs);
 
-template <class S, size_t N> auto norm(const vec<S, N> &v);
+template <class S, size_t N> auto norm(const vec_t<S, N> &v);
 
-template <class S, size_t N> auto mag(const vec<S, N> &v);
+template <class S, size_t N> auto mag(const vec_t<S, N> &v);
 
 template <class S, size_t N> auto zero_vec();
 
 template <class SL, class SR, class ST, size_t N>
-auto lerp(const vec<SL, N> &lhs, const vec<SR, N> &rhs, ST t);
+auto lerp(const vec_t<SL, N> &lhs, const vec_t<SR, N> &rhs, ST t);
 
 template <class SL, class SR>
-auto cross(const vec<SL, 3> &lhs, const vec<SR, 3> &rhs);
+auto cross(const vec_t<SL, 3> &lhs, const vec_t<SR, 3> &rhs);
 
-template <class S, size_t N> auto normalize(const vec<S, N> &v);
+template <class S, size_t N> auto normalize(const vec_t<S, N> &v);
 
-template <class S, size_t N> auto homogenize(const vec<S, N> &v);
+template <class S, size_t N> auto homogenize(const vec_t<S, N> &v);
 
 template <size_t N, size_t I = 0, class S, size_t M>
-auto sub(const vec<S, M> &v);
+auto sub(const vec_t<S, M> &v);
 
 template <class Scalar, class... Scalars>
-auto make_vec(Scalar value, Scalars... values);
+auto vec(Scalar value, Scalars... values);
 
 template <class Scalar, size_t N, class... Scalars>
-auto make_vec(const vec<Scalar, N> &v, Scalars... values);
+auto vec(const vec_t<Scalar, N> &v, Scalars... values);
 
 // mtx.hpp =====================================================================
 
-template <class Scalar, size_t R, size_t C = R> struct mtx {
+template <class Scalar, size_t R, size_t C = R> struct mtx_t {
   using scalar_type = Scalar;
 
   Scalar values[R][C];
@@ -92,48 +92,47 @@ template <class Scalar, size_t R, size_t C = R> struct mtx {
 };
 
 template <class BinOp, class SL, class SR, size_t R, size_t C>
-auto bin_op(const mtx<SL, R, C> &lhs, const mtx<SR, R, C> &rhs);
+auto bin_op(const mtx_t<SL, R, C> &lhs, const mtx_t<SR, R, C> &rhs);
 
-#define BIN_OP(name, op)                                                       \
+#define MAKE(op)                                                               \
   template <class SL, class SR, size_t R, size_t C>                            \
-  auto op(const mtx<SL, R, C> &lhs, const mtx<SR, R, C> &rhs);
+  auto op(const mtx_t<SL, R, C> &lhs, const mtx_t<SR, R, C> &rhs);
 
-BIN_OP(add_op, operator+)
-BIN_OP(sub_op, operator-)
-#undef BIN_OP
+MAKE(operator+)
+MAKE(operator-)
+#undef MAKE
 
 template <class SL, class SR, size_t R, size_t RC, size_t C>
-auto operator*(const mtx<SL, R, RC> &lhs, const mtx<SR, RC, C> &rhs);
+auto operator*(const mtx_t<SL, R, RC> &lhs, const mtx_t<SR, RC, C> &rhs);
 
-template <class S, size_t R, size_t C> auto transpose(const mtx<S, R, C> &m);
+template <class S, size_t R, size_t C> auto transpose(const mtx_t<S, R, C> &m);
 
-template <class S, size_t N> auto set_identity(mtx<S, N> *out);
+template <class S, size_t N> auto set_identity(mtx_t<S, N> *out);
 
-template <class S, size_t N> auto make_identity();
+template <class S, size_t N> auto identity();
 
 template <class S, size_t N, size_t M>
-auto gauss_jordan(mtx<S, N> *a, mtx<S, N, M> *y);
+auto gauss_jordan(mtx_t<S, N> *a, mtx_t<S, N, M> *y);
 
-template <class S, size_t N> auto inverse(const mtx<S, N> &m);
+template <class S, size_t N> auto inverse(const mtx_t<S, N> &m);
 
 template <class SL, size_t N, size_t M, class SR>
-auto operator*(const mtx<SL, N, M> &m, const vec<SR, M> &v);
+auto operator*(const mtx_t<SL, N, M> &m, const vec_t<SR, M> &v);
 
 template <size_t Rows, class... Scalars>
-auto from_columns(const vec<Scalars, Rows> &... columns);
+auto from_columns(const vec_t<Scalars, Rows> &...columns);
 
 template <class Scalar, size_t Rows>
-auto from_diagonal(const vec<Scalar, Rows> &diagonal);
+auto from_diagonal(const vec_t<Scalar, Rows> &diagonal);
 
 // transform.hpp ===============================================================
 
-template <class Scalar>
-auto make_projection(Scalar fov, Scalar near, Scalar far);
+template <class Scalar> auto perspective(Scalar fov, Scalar near, Scalar far);
 
-template <class Scalar> auto make_translation(const vec<Scalar, 3> &trans);
+template <class Scalar> auto translation(const vec_t<Scalar, 3> &trans);
 
-template <class Scalar> auto make_scaling(const vec<Scalar, 3> &scale);
+template <class Scalar> auto scaling(const vec_t<Scalar, 3> &scale);
 
-template <class Scalar> auto make_rotation(Scalar radians, size_t axis = 0);
+template <class Scalar> auto rotation(Scalar radians, size_t axis = 0);
 
 } // namespace math3d_v1

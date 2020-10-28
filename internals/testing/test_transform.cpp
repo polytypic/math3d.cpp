@@ -7,20 +7,18 @@ using namespace testing_v1;
 using namespace math3d_v1;
 
 auto test_scaling = test([]() {
-  auto v = make_scaling(make_vec(2.0f, 4.0f, 1.0f)) *
-           make_vec(0.5f, 0.25f, 1.0f, 0.0f);
+  auto v = scaling(vec(2.0f, 4.0f, 1.0f)) * vec(0.5f, 0.25f, 1.0f, 0.0f);
   verify(v[0] == 1 && v[1] == 1 && v[2] == 1);
 });
 
 auto test_translation = test([]() {
-  auto v = make_translation(make_vec(2.0f, 4.0f, 1.0f)) *
-           make_vec(-1.0f, -3.0f, 0.0f, 1.0f);
+  auto v = translation(vec(2.0f, 4.0f, 1.0f)) * vec(-1.0f, -3.0f, 0.0f, 1.0f);
   verify(v[0] == 1 && v[1] == 1 && v[2] == 1);
 });
 
 auto test_rotation = test([]() {
   for (size_t i = 0; i < 3; ++i) {
-    auto m = make_rotation<float>(float(pi) * 0.5f, i);
+    auto m = rotation<float>(float(pi) * 0.5f, i);
     auto u = zero_vec<float, 4>();
     u[(i + 1) % 3] = 1;
     auto v = m * u;
@@ -30,16 +28,16 @@ auto test_rotation = test([]() {
   }
 });
 
-auto test_projection = test([]() {
+auto test_perspective = test([]() {
   auto fov = from_angle(90.0f);
 
   auto near = 1.0f;
   auto far = 5.0f;
 
-  auto m = make_projection(fov, near, far);
+  auto m = perspective(fov, near, far);
 
   {
-    auto u = make_vec(near * std::tan(fov * 0.5f), 0.0f, -near, 1.0f);
+    auto u = vec(near * std::tan(fov * 0.5f), 0.0f, -near, 1.0f);
 
     auto v = homogenize(m * u);
 
@@ -48,7 +46,7 @@ auto test_projection = test([]() {
   }
 
   {
-    auto u = make_vec(0.0f, far * std::tan(fov * 0.5f), -far, 1.0f);
+    auto u = vec(0.0f, far * std::tan(fov * 0.5f), -far, 1.0f);
 
     auto v = homogenize(m * u);
 

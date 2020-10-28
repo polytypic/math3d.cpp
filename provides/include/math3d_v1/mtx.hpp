@@ -3,51 +3,51 @@
 #include "math3d_v1/vec.hpp"
 
 template <class Scalar, size_t R, size_t C>
-auto math3d_v1::mtx<Scalar, R, C>::rows() const {
+auto math3d_v1::mtx_t<Scalar, R, C>::rows() const {
   return R;
 }
 
 template <class Scalar, size_t R, size_t C>
-auto math3d_v1::mtx<Scalar, R, C>::columns() const {
+auto math3d_v1::mtx_t<Scalar, R, C>::columns() const {
   return C;
 }
 
 template <class Scalar, size_t R, size_t C>
-const auto &math3d_v1::mtx<Scalar, R, C>::operator[](size_t i) const {
+const auto &math3d_v1::mtx_t<Scalar, R, C>::operator[](size_t i) const {
   assert(i < R);
   return values[i];
 }
 
 template <class Scalar, size_t R, size_t C>
-auto &math3d_v1::mtx<Scalar, R, C>::operator[](size_t i) {
+auto &math3d_v1::mtx_t<Scalar, R, C>::operator[](size_t i) {
   assert(i < R);
   return values[i];
 }
 
 template <class BinOp, class SL, class SR, size_t R, size_t C>
-auto math3d_v1::bin_op(const mtx<SL, R, C> &lhs, const mtx<SR, R, C> &rhs) {
-  mtx<decltype(BinOp::apply(SL(), SR())), R, C> result;
+auto math3d_v1::bin_op(const mtx_t<SL, R, C> &lhs, const mtx_t<SR, R, C> &rhs) {
+  mtx_t<decltype(BinOp::apply(SL(), SR())), R, C> result;
   for (size_t i = 0; i < R; ++i)
     for (size_t j = 0; j < C; ++j)
       result[i][j] = BinOp::apply(lhs[i][j], rhs[i][j]);
   return result;
 }
 
-#define BIN_OP(name, op)                                                       \
+#define MAKE(name, op)                                                         \
   template <class SL, class SR, size_t R, size_t C>                            \
-  auto math3d_v1::op(const mtx<SL, R, C> &lhs, const mtx<SR, R, C> &rhs) {     \
+  auto math3d_v1::op(const mtx_t<SL, R, C> &lhs, const mtx_t<SR, R, C> &rhs) { \
     return bin_op<name>(lhs, rhs);                                             \
   }
 
-BIN_OP(add_op, operator+)
-BIN_OP(sub_op, operator-)
-#undef BIN_OP
+MAKE(add_op_t, operator+)
+MAKE(sub_op_t, operator-)
+#undef MAKE
 
 template <class SL, class SR, size_t R, size_t RC, size_t C>
-auto math3d_v1::operator*(const mtx<SL, R, RC> &lhs,
-                          const mtx<SR, RC, C> &rhs) {
+auto math3d_v1::operator*(const mtx_t<SL, R, RC> &lhs,
+                          const mtx_t<SR, RC, C> &rhs) {
   using S = decltype(SL() * SR());
-  mtx<S, R, C> result;
+  mtx_t<S, R, C> result;
   for (size_t i = 0; i < R; ++i) {
     for (size_t j = 0; j < C; ++j) {
       S accum = lhs[i][0] * rhs[0][j];
@@ -60,29 +60,29 @@ auto math3d_v1::operator*(const mtx<SL, R, RC> &lhs,
 }
 
 template <class S, size_t R, size_t C>
-auto math3d_v1::transpose(const mtx<S, R, C> &m) {
-  mtx<S, C, R> result;
+auto math3d_v1::transpose(const mtx_t<S, R, C> &m) {
+  mtx_t<S, C, R> result;
   for (size_t i = 0; i < R; ++i)
     for (size_t j = 0; j < C; ++j)
       result[j][i] = m[i][j];
   return result;
 }
 
-template <class S, size_t N> auto math3d_v1::set_identity(mtx<S, N> *out) {
+template <class S, size_t N> auto math3d_v1::set_identity(mtx_t<S, N> *out) {
   assert(out);
   for (size_t i = 0; i < N; ++i)
     for (size_t j = 0; j < N; ++j)
       (*out)[i][j] = S(i == j);
 }
 
-template <class S, size_t N> auto math3d_v1::make_identity() {
-  mtx<S, N> result;
+template <class S, size_t N> auto math3d_v1::identity() {
+  mtx_t<S, N> result;
   set_identity(&result);
   return result;
 }
 
 template <class S, size_t N, size_t M>
-auto math3d_v1::gauss_jordan(mtx<S, N> *pa, mtx<S, N, M> *py) {
+auto math3d_v1::gauss_jordan(mtx_t<S, N> *pa, mtx_t<S, N, M> *py) {
   assert(pa && py);
   auto &a = *pa;
   auto &y = *py;
@@ -120,17 +120,17 @@ auto math3d_v1::gauss_jordan(mtx<S, N> *pa, mtx<S, N, M> *py) {
   }
 }
 
-template <class S, size_t N> auto math3d_v1::inverse(const mtx<S, N> &m) {
+template <class S, size_t N> auto math3d_v1::inverse(const mtx_t<S, N> &m) {
   auto system = m;
-  auto result = make_identity<S, N>();
+  auto result = identity<S, N>();
   gauss_jordan(&system, &result);
   return result;
 }
 
 template <class SL, size_t N, size_t M, class SR>
-auto math3d_v1::operator*(const mtx<SL, N, M> &m, const vec<SR, M> &v) {
+auto math3d_v1::operator*(const mtx_t<SL, N, M> &m, const vec_t<SR, M> &v) {
   using S = decltype(SL() * SR());
-  vec<S, N> result;
+  vec_t<S, N> result;
   for (size_t i = 0; i < N; ++i) {
     S accum = m[i][0] * v[0];
     for (size_t j = 1; j < M; ++j) {
@@ -142,9 +142,9 @@ auto math3d_v1::operator*(const mtx<SL, N, M> &m, const vec<SR, M> &v) {
 }
 
 template <size_t Rows, class... Scalars>
-auto math3d_v1::from_columns(const vec<Scalars, Rows> &... columns) {
+auto math3d_v1::from_columns(const vec_t<Scalars, Rows> &...columns) {
   using Scalar = decltype((Scalars() + ...));
-  mtx<Scalar, Rows, sizeof...(Scalars)> result;
+  mtx_t<Scalar, Rows, sizeof...(Scalars)> result;
   for (size_t i = 0; i < Rows; ++i) {
     size_t j = 0;
     ((result[i][j++] = columns[i]), ...);
@@ -153,8 +153,8 @@ auto math3d_v1::from_columns(const vec<Scalars, Rows> &... columns) {
 }
 
 template <class Scalar, size_t Rows>
-auto math3d_v1::from_diagonal(const vec<Scalar, Rows> &diagonal) {
-  mtx<Scalar, Rows> result{};
+auto math3d_v1::from_diagonal(const vec_t<Scalar, Rows> &diagonal) {
+  mtx_t<Scalar, Rows> result{};
   for (size_t i = 0; i < Rows; ++i)
     result[i][i] = diagonal[i];
   return result;
